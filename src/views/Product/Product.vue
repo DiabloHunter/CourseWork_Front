@@ -71,10 +71,6 @@ export default {
       }
       this.filteredProducts = this.thisProducts;
 
-      console.log(this.thisProducts);
-      console.log(this.filteredProducts);
-      console.log(this.priceStart);
-      console.log(this.priceEnd);
 
       /////////
       if(this.search!=null){
@@ -87,29 +83,17 @@ export default {
         })
       }
 
-      console.log(this.thisProducts);
-      console.log(this.filteredProducts);
-      console.log(this.priceStart);
-      console.log(this.priceEnd);
       /////////
 
       if(this.priceStart!=null && this.priceStart!=""){
         this.filteredProducts = this.filteredProducts.filter(x=>x.price>=this.priceStart);
       }
 
-      console.log(this.thisProducts);
-      console.log(this.filteredProducts);
-      console.log(this.priceStart);
-      console.log(this.priceEnd);
-
+      /////////
       if(this.priceEnd!=null && this.priceEnd!=""){
         this.filteredProducts = this.filteredProducts.filter(x=>x.price<=this.priceEnd);
       }
-
-      console.log(this.thisProducts);
-      console.log(this.filteredProducts);
-      console.log(this.priceStart);
-      console.log(this.priceEnd);
+      /////////
     },
   },
   mounted() {

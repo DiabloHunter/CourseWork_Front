@@ -65,7 +65,6 @@ export default {
         await axios
             .get(`${this.baseURL}order/getOrders/?token=${this.token}`)
             .then((res) => {
-              console.log(1)
               const result = res.data;
               this.orderItems = result.orderItems;
             })
