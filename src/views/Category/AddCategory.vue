@@ -52,7 +52,7 @@ export default {
         imageUrl: this.imageUrl,
       };
 
-      const baseURL = "http://localhost:8080";
+      const baseURL = "http://localhost:8080/api";
 
       axios({
         method: "post",

@@ -3,7 +3,8 @@
     <!-- Navbar content -->
     <!--    Logo-->
     <router-link class="navbar-brand" :to="{ name: 'home' }">
-      <img id="logo" src="../assets/icon.png" />
+      <h4>Easy&Go</h4>
+<!--      <img id="logo" src="../assets/icon.png" />-->
     </router-link>
     <!--    Burger Button-->
     <button

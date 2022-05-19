@@ -37,7 +37,7 @@ export default {
   components: { CategoryBox },
   data() {
     return {
-      baseURL: "http://localhost:8080",
+      baseURL: "http://localhost:8080/api",
       sort:null,
       search:null,
       thisCategory:null,

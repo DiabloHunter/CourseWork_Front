@@ -61,6 +61,7 @@ export default {
       category:{},
       quantity: 1,
       wishListString: "Add to wishlist",
+      wishlist: null
     }
   },
   props: ["baseURL", "products", "categories"],
@@ -76,22 +77,46 @@ export default {
         return;
       }
       // add item to wishlist
-      axios
-          .post(`${this.baseURL}wishlist/add?token=${this.token}`, {
-            id: this.product.id,
-          })
-          .then((res) => {
-            if (res.status === 201) {
-              this.wishListString = "Added to Wishlist";
-              swal({
-                text: "Added to Wishlist",
-                icon: "success",
-              });
-            }
-          })
-          .catch((err) => {
-            console.log("err", err);
-          });
+      if(this.wishlist.find((product)=>product.id == this.id)!=null){
+        axios
+            .delete(`${this.baseURL}wishlist/delete/${this.id}?token=${this.token}`)
+            .then((res) => {
+              let index = this.wishlist.indexOf((product)=>product.id == this.product.id);
+              console.log(index);
+              this.wishlist.splice(index);
+              console.log(this.wishlist);
+              if (res.status === 200) {
+                this.wishListString = "Add to Wishlist";
+                swal({
+                  text: "Deleted from Wishlist",
+                  icon: "success",
+                });
+              }
+            })
+            .catch((err) => {
+              console.log("err", err);
+            });
+      }
+      else{
+        axios
+            .post(`${this.baseURL}wishlist/add?token=${this.token}`, {
+              id: this.product.id,
+            })
+            .then((res) => {
+              this.wishlist.push(this.product);
+              console.log(this.wishlist);
+              if (res.status === 201) {
+                this.wishListString = "Added to Wishlist";
+                swal({
+                  text: "Added to Wishlist",
+                  icon: "success",
+                });
+              }
+            })
+            .catch((err) => {
+              console.log("err", err);
+            });
+      }
     },
     addToCart() {
       if (!this.token) {
@@ -120,12 +145,32 @@ export default {
           })
           .catch((err) => console.log("err", err));
     },
+    fetchWishList() {
+      axios
+          .get(`${this.baseURL}wishlist/${this.token}`)
+          .then((data) => {
+            this.wishlist = data.data;
+            let inWishList;
+            if(this.wishlist!=null){
+              inWishList = this.wishlist.find((product)=>product.id == this.id);
+            }
+            if(inWishList!=null){
+              this.wishListString = "Added to Wishlist";
+            }
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
+    },
   },
   mounted() {
     this.id = this.$route.params.id;
+    this.token = localStorage.getItem("token");
+    this.fetchWishList();
+
     this.product = this.products.find((product)=>product.id == this.id);
     this.category = this.categories.find((category)=>category.id == this.product.categoryId);
-    this.token = localStorage.getItem("token");
+
   }
 }
 </script>

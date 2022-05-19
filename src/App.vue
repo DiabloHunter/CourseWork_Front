@@ -27,7 +27,7 @@ export default {
   components: {Footer, Navbar},
   data() {
     return {
-      baseURL: 'http://localhost:8080/',
+      baseURL: 'http://localhost:8080/api/',
       products:null,
       categories:null,
       orderItems:null,
