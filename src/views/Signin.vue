@@ -43,17 +43,16 @@ export default {
       await axios
           .post(`${this.baseURL}user/signin`, body)
           .then((res) => {
-/*            if(this.email=="admin@gmail.com"){
-              console.log(this.email.localeCompare("admin@gmail.com"));
+/*            if(this.email=="ADMIN"){
+              console.log(this.email.localeCompare("ADMIN"));
               console.log("true");
 
             }*/
             localStorage.setItem("token", res.data.token);
-            console.log(1);
-            console.log(res.data.email);
-            if(res.data.email==="admin@gmail.com"){
+            console.log(res.data.role);
+            if(res.data.role==="ADMIN"){
               console.log(2);
-              localStorage.setItem("userEmail", res.data.email);
+              localStorage.setItem("userRole", res.data.role);
 
             }
 

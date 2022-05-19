@@ -15,7 +15,7 @@
       <p class="card-text">
         {{ category.description }}
       </p>
-      <router-link v-if="userEmail" :to="{name:'EditCategory', params:{id:category.id}}"
+      <router-link v-if="userRole" :to="{name:'EditCategory', params:{id:category.id}}"
                    v-show="$route.name=='Category'">
         <button class="btn btn-primary">Edit</button>
       </router-link>
@@ -25,7 +25,7 @@
 <script>
 export default {
   name: "CategoryBox",
-  props: ["category", "userEmail"],
+  props: ["category", "userRole"],
   methods: {},
 };
 </script>

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-12 text-center">
         <h4>Our Products</h4>
-        <router-link v-if="userEmail" :to="{name:'AddProduct'}">
+        <router-link v-if="userRole" :to="{name:'AddProduct'}">
           <button class="btn" style="float: right">Add Product</button>
         </router-link>
 
@@ -29,7 +29,7 @@
       <div v-for="product of filteredProducts" :key="product.id"
            class="col-md-6 col-xl-4 col-12 pt-3">
         <ProductBox :product="product"
-                    :userEmail = "userEmail"></ProductBox>
+                    :userRole = "userRole"></ProductBox>
       </div>
     </div>
   </div>
@@ -41,7 +41,7 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Product",
   components: {ProductBox},
-  props:["products", "userEmail"],
+  props:["products", "userRole"],
   data(){
     return {
       sort:null,
@@ -99,6 +99,7 @@ export default {
   mounted() {
     this.$emit("fetchData");
     this.thisProducts = this.products;
+    console.log(this.userRole);
     this.productSortAndFilter();
   }
 }

@@ -11,11 +11,15 @@
       <router-link :to="{name:'ShowDetails', params:{id:product.id}}">
         <h5 class="card-title">{{ product.name }}</h5>
       </router-link>
-      <p class="card-text">
+      <p class="card-text" style="display: inline-block">
         {{ product.description.substring(0, 65) }}...
       </p>
+      <p class="card-text" style="float: right">
+        {{ product.price}}$
+      </p>
+      <br>
       <router-link :to="{name:'EditProduct', params:{id:product.id}}"
-      v-if="userEmail">
+      v-if="userRole">
         <button class="btn btn-primary">Edit</button>
       </router-link>
     </div>
@@ -25,7 +29,7 @@
 <script>
 export default {
   name: "ProductBox",
-  props: ["product", "userEmail"],
+  props: ["product", "userRole"],
   data() {
     return {
       email: null,

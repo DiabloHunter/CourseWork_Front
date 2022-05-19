@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-12 text-center">
         <h3 class="pt-3">Our Categories</h3>
-        <router-link v-if="userEmail"  :to="{ name: 'AddCategory' }">
+        <router-link v-if="userRole"  :to="{ name: 'AddCategory' }">
           <button class="btn" style="float:right">Add Category</button>
         </router-link>
 
@@ -23,7 +23,7 @@
     <div class="row">
       <div v-for="category of filteredCategory" :key="category.id" class="col-xl-4 col-md-6 col-12 pt-3 d-flex">
         <CategoryBox :category="category"
-                     :userEmail="userEmail"></CategoryBox>
+                     :userRole="userRole"></CategoryBox>
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@ import CategoryBox from '@/components/Category/CategoryBox.vue';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name:"Category",
-  props:["categories", "userEmail"],
+  props:["categories", "userRole"],
   components: { CategoryBox },
   data() {
     return {

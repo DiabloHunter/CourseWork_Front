@@ -9,7 +9,7 @@
       :products="products"
       :orderItems="orderItems"
       :token="token"
-      :userEmail="userEmail"
+      :userRole="userRole"
       @fetchData="fetchData"
       @resetCartCountAfterPayment="resetCartCountAfterPayment"
   >
@@ -33,13 +33,13 @@ export default {
       orderItems:null,
       cartCount: 0,
       token:null,
-      userEmail:null,
+      userRole:null,
     }
   },
   methods: {
     async fetchData(){
       this.token = localStorage.getItem("token");
-      this.userEmail = localStorage.getItem("userEmail");
+      this.userRole = localStorage.getItem("userRole");
       //api call to get categories
       await axios.get(this.baseURL + "category/")
       .then(res=> {
@@ -76,7 +76,7 @@ export default {
     resetCartCount() {
       this.cartCount = 0;
       this.token = null;
-      this.userEmail = null;
+      this.userRole = null;
     },
 
     resetCartCountAfterPayment() {
@@ -86,7 +86,7 @@ export default {
   },
   mounted() {
     this.token = localStorage.getItem("token");
-    this.userEmail = localStorage.getItem("userEmail");
+    this.userRole = localStorage.getItem("userRole");
     this.fetchData();
   }
 };

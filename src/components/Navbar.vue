@@ -119,7 +119,7 @@ export default {
   methods: {
     signout() {
       localStorage.removeItem("token");
-      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userRole");
       swal({
         text: "Logged you out. Visit again",
         icon: "success",
