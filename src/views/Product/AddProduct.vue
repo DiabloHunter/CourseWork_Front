@@ -18,7 +18,7 @@
           </div>
           <div class="form-group">
             <label>Code</label>
-            <input type="text" v-model="code" class="form-control" required />
+            <input type="text" v-model="code" class="form-control" placeholder="D001" required />
           </div>
           <div class="form-group">
             <label>Name</label>
@@ -26,11 +26,11 @@
           </div>
           <div class="form-group">
             <label>Description</label>
-            <input type="text" v-model="description" class="form-control" required>
+            <textarea v-model="description" class="form-control" pattern=".{3,240}" required/>
           </div>
           <div class="form-group">
             <label>Image Url</label>
-            <textarea v-model="imageURL" class="form-control" pattern=".{30,240}" required />
+            <textarea v-model="imageURL" class="form-control" pattern=".{20,240}" required />
           </div>
           <div class="form-group">
             <label>Price</label>
@@ -103,7 +103,7 @@ export default {
           }).catch((err)=> {
         console.log("err", err);
       })
-
+      this.$emit("fetchData");
 
     }
   }
