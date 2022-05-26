@@ -15,13 +15,13 @@
           </div>
           <div class="form-group">
             <label>Description</label>
-            <input type="text" class="form-control" v-model="description" pattern=".{30,240}" />
+            <input type="text" class="form-control" v-model="description" pattern=".{3,240}"/>
           </div>
           <div class="form-group">
             <label>Image</label>
-            <input type="text" class="form-control" v-model="imageUrl" pattern=".{30,240}"/>
+            <input type="text" class="form-control" v-model="imageUrl" pattern=".{20,240}" />
           </div>
-          <button type="button" class="btn btn-primary" @onclick="addCategory()">
+          <button type="button" class="btn btn-primary" @click="addCategory()">
             Submit
           </button>
         </form>
@@ -32,10 +32,9 @@
 </template>
 <script>
 import swal from "sweetalert";
-
-const axios = require("axios");
-const sweetalert = require("sweetalert");
+import axios from 'axios'
 export default {
+  props: ["baseURL"],
   data() {
     return {
       categoryName: "",
@@ -45,18 +44,37 @@ export default {
   },
   methods: {
     addCategory() {
-      console.log(this.categoryName, this.description);
       const newCategory = {
         categoryName: this.categoryName,
         description: this.description,
         imageUrl: this.imageUrl,
       };
 
-      const baseURL = "http://localhost:8080/api";
 
-      axios({
+      axios.post(this.baseURL+"category/create", newCategory)
+          .then((res) => {
+            if(res.data.success){
+              this.$emit("fetchData");
+              this.$router.push({name: 'Category'});
+              swal({
+                text: "Category added successfully",
+                icon: "success"
+              })
+            }
+            else{
+              swal({
+                text: res.data.message,
+                icon: "error",
+              });
+            }
+          }).catch((err)=> {
+        console.log("err", err);
+      })
+      this.$emit("fetchData");
+
+     /* axios({
         method: "post",
-        url: `${baseURL}/category/create`,
+        url: `${this.baseURL}/category/create`,
         data: JSON.stringify(newCategory),
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +98,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-        });
+        });*/
     },
   },
 };

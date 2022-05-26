@@ -77,7 +77,7 @@ export default {
         return;
       }
       // add item to wishlist
-      if(this.wishlist.find((product)=>product.id == this.id)!=null){
+      if(this.wishlist!=null && this.wishlist.find((product)=>product.id == this.id)!=null){
         axios
             .delete(`${this.baseURL}wishlist/delete/${this.id}?token=${this.token}`)
             .then((res) => {
@@ -147,7 +147,7 @@ export default {
     },
     fetchWishList() {
       axios
-          .get(`${this.baseURL}wishlist/${this.token}`)
+          .get(`${this.baseURL}wishlist/?token=${this.token}`)
           .then((data) => {
             this.wishlist = data.data;
             let inWishList;

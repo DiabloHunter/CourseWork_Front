@@ -8,7 +8,7 @@
               <a href="#start-shopping">Start Shopping</a>
             </router-link>
           </h3>
-          <p class="lead mb-0 bg-dark p-1 rounded"> Demo Ecommerce</p>
+          <p class="lead mb-0 bg-dark p-1 rounded">Demo</p>
         </header>
       </div>
     </div>
