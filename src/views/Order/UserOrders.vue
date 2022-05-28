@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h4>Orders</h4>
+        <h4>{{translate('title')}}</h4>
         <h5 style="font-weight: 300; color: #686868"> {{msg}} </h5>
       </div>
     </div>
@@ -10,7 +10,7 @@
       <!--      Display all the products in product box component-->
       <div v-for="order of orderItems" :key="order.id"
            class="col-md-6 col-xl-4 col-12 pt-3">
-        <OrderBox :order="order"></OrderBox>
+        <OrderBox :order="order" :language="language"></OrderBox>
       </div>
     </div>
   </div>
@@ -18,9 +18,12 @@
 
 <script>
 import OrderBox from "@/components/OrderBox";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "UserOrders",
+  mixins:[en, ua],
   components: {OrderBox},
    data() {
     return {
@@ -28,8 +31,11 @@ export default {
       msg:'',
     };
   },
-  props: ["baseURL", "orderItems"],
+  props: ["baseURL", "orderItems", "language"],
   methods: {
+    translate(prop){
+      return this[this.language]["orders"][prop];
+    },
     listUserOrders() {
       if(this.token==null){
         this.$router.push({ name: "home" });

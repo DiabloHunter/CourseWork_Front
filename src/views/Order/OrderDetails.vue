@@ -3,16 +3,10 @@
     <div class="row">
       <div class="col-12 text-center">
         <h3 class="pt-3">
-          Products in order
+          {{translate('title')}}
         </h3>
       </div>
     </div>
-
-    <!-- loop over the cart items and display -->
-
-<!--
-    <h1>{{orderItems.products[0].description}}</h1>
--->
 
     <div
         v-for="productItem in products"
@@ -41,14 +35,14 @@
           </h6>
 
           <p class="mb-0 font-weight-bold" id="item-price">
-            $ {{ productItem.price }} per unit
+            $ {{ productItem.price }} {{translate('perUnit')}}
           </p>
           <p class="mb-0" style="float:left">
-            Quantity:{{ productItem.quantity }}
+            {{translate('quantity')}}:{{ productItem.quantity }}
           </p>
         </div>
         <p class="mb-0" style="float:right">
-          Total:
+          {{translate('total')}}:
           <span class="font-weight-bold">
             $ {{ productItem.price * productItem.quantity }}
           </span>
@@ -67,10 +61,13 @@
 </template>
 <script>
 import axios from "axios";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name:"OrderDetails",
+  mixins:[en, ua],
   data() {
     return {
       id:null,
@@ -78,8 +75,11 @@ export default {
       products: null,
     };
   },
-  props: ["baseURL", "orderItems"],
+  props: ["baseURL", "orderItems", "language"],
   methods:{
+    translate(prop){
+      return this[this.language]["orderDetails"][prop];
+    },
     async getOrder(){
       await axios
           .get(`${this.baseURL}order/getOrder/${this.id}?token=${this.token}`)

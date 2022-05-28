@@ -2,11 +2,9 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h4 class="pt-3">Your WishList</h4>
+        <h4 class="pt-3">{{translate('title')}}</h4>
       </div>
     </div>
-
-    <!-- display products -->
 
     <div class="row">
       <div
@@ -22,8 +20,11 @@
 <script>
 import axios from "axios";
 import ProductBox from "../../components/ProductBox.vue";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 export default {
   name:"WishList",
+  mixins:[en, ua],
   components: { ProductBox },
   data() {
     return {
@@ -31,8 +32,11 @@ export default {
       products: null,
     };
   },
-  props: ["baseURL"],
+  props: ["baseURL", "language"],
   methods: {
+    translate(prop){
+      return this[this.language]["wishlist"][prop];
+    },
     fetchWishList() {
       axios
           .get(`${this.baseURL}wishlist/?token=${this.token}`)

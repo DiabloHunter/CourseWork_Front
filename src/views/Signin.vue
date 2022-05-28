@@ -3,17 +3,18 @@
     <div class="row">
       <div class="col-12 justify-content-center d-flex flex-row pt-5">
         <div id="signin" class="flext-item border">
-          <h2 class="pt-4">Sign-In</h2>
+
           <form @submit="signin" class="form-group pt-4 pl-4 pr-4">
+            <h2 class="pt-4">{{translate('title')}}</h2>
             <div class="form-group">
-              <label>Email </label>
+              <label>Email</label>
               <input v-model="email" type="email" class="form-control" />
             </div>
             <div class="form-group">
-              <label>Password </label>
+              <label>{{translate('password')}}</label>
               <input v-model="password" type="password" class="form-control" />
             </div>
-            <button class="btn btn-primary mt-2 py-0">Continue</button>
+            <button class="btn btn-primary mt-2 py-0">{{translate('continue')}}</button>
           </form>
         </div>
       </div>
@@ -23,10 +24,13 @@
 <script>
 import axios from "axios";
 import swal from "sweetalert";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name:"Signin",
-  props: ["baseURL"],
+  mixins:[en, ua],
+  props: ["baseURL", "language"],
   data() {
     return {
       email: null,
@@ -34,6 +38,9 @@ export default {
     };
   },
   methods: {
+    translate(prop){
+      return this[this.language]["signIn"][prop];
+    },
     async signin(e) {
       e.preventDefault();
       const body = {
@@ -43,20 +50,16 @@ export default {
       await axios
           .post(`${this.baseURL}user/signin`, body)
           .then((res) => {
-/*            if(this.email=="ADMIN"){
-              console.log(this.email.localeCompare("ADMIN"));
-              console.log("true");
+            /*            if(this.email=="ADMIN"){
+                          console.log(this.email.localeCompare("ADMIN"));
+                          console.log("true");
 
-            }*/
+                        }*/
             localStorage.setItem("token", res.data.token);
             console.log(res.data.role);
             if(res.data.role==="ADMIN"){
-              console.log(2);
               localStorage.setItem("userRole", res.data.role);
-
             }
-
-
             swal({
               text: "Login successful",
               icon: "success",

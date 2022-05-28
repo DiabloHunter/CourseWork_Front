@@ -2,23 +2,23 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h4>Our Products</h4>
+        <h4>{{translate('title')}}</h4>
         <router-link v-if="userRole" :to="{name:'AddProduct'}">
-          <button class="btn" style="float: right">Add Product</button>
+          <button class="btn" style="float: right">{{translate('addProduct')}}</button>
         </router-link>
 
         <div style="">
           <select class="form-control" v-model="sort" style="width: 20%; display: inline-block; margin-right: 1%" >
-            <option value="id" selected>Order</option>
-            <option value="name">Name</option>
-            <option value="description" >Description</option>
-            <option value="price" >Price</option>
+            <option value="id" selected>{{translate('order')}}</option>
+            <option value="name">{{translate('name')}}</option>
+            <option value="description" >{{translate('description')}}</option>
+            <option value="price">{{translate('price')}}</option>
           </select>
           <input class="form-control" placeholder="Search" style="width: 20%;display: inline-block;margin-right: 1%"  v-model="search" />
           <input class="form-control" placeholder="Price start" style="width: 10%;display: inline-block;margin-right: 1%"  v-model="priceStart"/>
           <input class="form-control" placeholder="Price end" style="width: 10%;display: inline-block; margin-right: 1%"  v-model="priceEnd"/>
 
-          <button type="button" class="btn btn-primary" style="display: inline-block; margin-bottom: 3px" @click="productSortAndFilter()">Submit</button>
+          <button type="button" class="btn btn-primary" style="display: inline-block; margin-bottom: 3px" @click="productSortAndFilter()">{{translate('submit')}}</button>
         </div>
 
 
@@ -29,7 +29,8 @@
       <div v-for="product of filteredProducts" :key="product.id"
            class="col-md-6 col-xl-4 col-12 pt-3">
         <ProductBox :product="product"
-                    :userRole = "userRole"></ProductBox>
+                    :userRole = "userRole"
+                    :language="language"></ProductBox>
       </div>
     </div>
   </div>
@@ -37,11 +38,14 @@
 
 <script>
 import ProductBox from "@/components/ProductBox";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Product",
+  mixins:[en, ua],
   components: {ProductBox},
-  props:["products", "userRole"],
+  props:["products", "userRole", "language"],
   data(){
     return {
       sort:null,
@@ -53,8 +57,10 @@ export default {
     }
   },
   methods:{
+    translate(prop){
+      return this[this.language]["product"][prop];
+    },
     productSortAndFilter() {
-
       switch (this.sort){
         case "id":
           this.thisProducts.sort(function(a, b){return a.id - b.id});

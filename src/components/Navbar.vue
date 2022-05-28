@@ -19,26 +19,31 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!--      Search Bar-->
-     
       <!-- dropdown for browse -->
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <select name="lang" class="custom-select" v-model="lang" @change="changeLang()">
+            <option value="en">English</option>
+            <option value="ua">Український</option>
+          </select>
+        </li>
         <li class="nav-item dropdown">
           <a
               class="nav-link text-light dropdown-toggle"
               href="#"
               id="navbarBrowse"
               data-toggle="dropdown">
-            Browse
+            {{translate('browse')}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarBrowse">
             <router-link class="dropdown-item" :to="{ name: 'home' }" style="color:black;">
-              Home
+              {{translate('home')}}
             </router-link>
             <router-link class="dropdown-item" :to="{ name: 'AdminProduct' }" style="color:black;">
-              Products
+              {{translate('products')}}
             </router-link>
             <router-link class="dropdown-item" :to="{ name: 'Category' }" style="color:black;">
-              Categories
+              {{translate('categories')}}
             </router-link>
           </div>
         </li>
@@ -49,7 +54,7 @@
               id="navbarAccount"
               data-toggle="dropdown"
           >
-            Accounts
+            {{translate('accounts')}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarAccount">
             <router-link
@@ -57,37 +62,37 @@
                 class="dropdown-item"
                 :to="{ name: 'Profile'}"
                 style="color:black;">
-              Profile
+              {{translate('profile')}}
             </router-link>
             <router-link
                 v-if="token"
                 class="dropdown-item"
                 :to="{ name: 'WishList' }"
                 style="color:black;">
-              Wishlist
+              {{translate('wishlist')}}
             </router-link>
             <router-link
                 v-if="token"
                 class="dropdown-item"
                 :to="{ name: 'UserOrders' }"
                 style="color:black;">
-              Orders
+              {{translate('orders')}}
             </router-link>
             <router-link
                 v-if="!token"
                 class="dropdown-item"
                 :to="{ name: 'Signup' }"
                 style="color:black;">
-              Sign up
+              {{translate('signUp')}}
             </router-link>
             <router-link
                 v-if="!token"
                 class="dropdown-item"
                 :to="{ name: 'Signin' }"
                 style="color:black;">
-              Sign in
+              {{translate('signIn')}}
             </router-link>
-            <a class="dropdown-item" v-if="token" href="#" @click="signout">Sign out
+            <a class="dropdown-item" v-if="token" href="#" @click="signout">{{translate('signOut')}}
             </a>
 
           </div>
@@ -107,21 +112,32 @@
 </template>
 <script>
 import swal from "sweetalert";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Navbar",
-  props: ["cartCount", "token"],
-/*  data() {
+  mixins:[en, ua],
+  props: ["cartCount", "token", "language"],
+  data() {
     return {
-      token: null,
+      lang: "en",
     };
-  },*/
+  },
   methods: {
+    translate(prop){
+      return this[this.language]["navbar"][prop];
+    },
+    changeLang(){
+      this.$emit("changeLang", {
+            lang: this.lang,
+      })
+    },
     signout() {
       localStorage.removeItem("token");
       localStorage.removeItem("userRole");
       swal({
-        text: "Logged you out. Visit again",
+        text: this.translate('loggedOut'),
         icon: "success",
       });
       this.$emit("resetCartCount");

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h4 class="pt-3">Edit Category</h4>
+        <h4 class="pt-3">{{translate('title')}}</h4>
       </div>
     </div>
     <div class="row">
@@ -10,19 +10,19 @@
       <div class="col-6">
         <form v-if="category">
           <div class="form-group">
-            <label>Category Name</label>
+            <label>{{translate('name')}}</label>
             <input type="text" class="form-control" v-model="category.categoryName" required />
           </div>
           <div class="form-group">
-            <label>Description</label>
+            <label>{{translate('description')}}</label>
             <textarea type="text" class="form-control" v-model="category.description" pattern=".{30,240}" required />
           </div>
           <div class="form-group">
-            <label>Image URL</label>
+            <label>{{translate('image')}}</label>
             <textarea type="text" class="form-control" v-model="category.imageUrl" pattern=".{30,240}" required />
           </div>
-          <button class="btn btn-primary" type="button" @click="editCategory()">Submit</button>
-          <button class="btn btn-danger" type="button" @click="deleteCategory()" style="float: right">Delete</button>
+          <button class="btn btn-primary" type="button" @click="editCategory()">{{translate('submit')}}</button>
+          <button class="btn btn-danger" type="button" @click="deleteCategory()" style="float: right">{{translate('delete')}}</button>
         </form>
       </div>
       <div class="col-3"></div>
@@ -33,17 +33,23 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert'
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 
 export default {
   name: "EditCategory",
+  mixins:[en, ua],
   data(){
     return{
       category:null,
       id:null
     }
   },
-  props:["baseURL","categories"],
+  props:["baseURL","categories", "language"],
   methods:{
+    translate(prop){
+      return this[this.language]["editCategory"][prop];
+    },
     async editCategory(){
       delete this.category["products"]
       console.log('category', this.category)
@@ -53,7 +59,7 @@ export default {
               this.$emit("fetchData");
               this.$router.push({name:'Category'})
               swal({
-                text:"Category has been updated successfully",
+                text:this.translate('updatedCategory'),
                 icon: "success"
               })
             }
@@ -73,7 +79,7 @@ export default {
             this.$emit("fetchData");
             this.$router.push({name:'Category'})
             swal({
-              text:"Category has been deleted successfully",
+              text:this.translate('deletedCategory'),
               icon: "success"
             })
           }).catch(err=>console.log('err', err))

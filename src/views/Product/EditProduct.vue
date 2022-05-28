@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h4 class="pt-3">Edit Product</h4>
+        <h4 class="pt-3">{{translate('title')}}</h4>
       </div>
     </div>
     <div class="row">
@@ -10,7 +10,7 @@
       <div class="col-6">
         <form v-if="product">
           <div class="form-group">
-            <label>Category</label>
+            <label>{{translate('category')}}</label>
             <select class="form-control" v-model="product.categoryId">
               <option v-for="category of categories"
                       :key="category.id"
@@ -18,35 +18,35 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Code</label>
+            <label>{{translate('code')}}</label>
             <input type="text" class="form-control" v-model="product.code" required>
           </div>
           <div class="form-group">
-            <label>Name</label>
+            <label>{{translate('name')}}</label>
             <input type="text" class="form-control" v-model="product.name" required>
           </div>
           <div class="form-group">
-            <label>Description</label>
+            <label>{{translate('description')}}</label>
             <input type="text" class="form-control" v-model="product.description" required />
           </div>
           <div class="form-group">
-            <label>Image URL</label>
+            <label>{{translate('image')}}</label>
             <input type="text" class="form-control" v-model="product.imageURL"  required />
           </div>
           <div class="form-group">
-            <label>Price($)</label>
+            <label>{{translate('price')}}</label>
             <input type="number" class="form-control" v-model="product.price" required />
           </div>
           <div class="form-group">
-            <label>Minimal sales</label>
+            <label>{{translate('minimalSales')}}</label>
             <input type="number" class="form-control" v-model="product.minSales" required />
           </div>
           <div class="form-group">
-            <label>Maximal sales</label>
+            <label>{{translate('maximumSales')}}</label>
             <input type="number" class="form-control" v-model="product.maxSales" required />
           </div>
-          <button class="btn btn-primary" type="button" @click="editProduct()">Submit</button>
-          <button class="btn btn-danger" type="button" @click="deleteProduct()" style="float:right;">Delete</button>
+          <button class="btn btn-primary" type="button" @click="editProduct()">{{translate('submit')}}</button>
+          <button class="btn btn-danger" type="button" @click="deleteProduct()" style="float:right;">{{translate('delete')}}</button>
         </form>
       </div>
       <div class="col-3"></div>
@@ -56,17 +56,23 @@
 <script>
 import axios from "axios";
 import swal from "sweetalert";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 
 export default {
   name: "EditProduct",
+  mixins:[en, ua],
   data(){
     return{
       product:null,
       id:null
     }
   },
-  props:["baseURL","categories", "products"],
+  props:["baseURL","categories", "products", "language"],
   methods:{
+    translate(prop){
+      return this[this.language]["editProduct"][prop];
+    },
     async editProduct(){
       delete this.product["products"]
       console.log('product', this.product)
@@ -76,7 +82,7 @@ export default {
               this.$emit("fetchData");
               this.$router.push({name:'AdminProduct'});
               swal({
-                text:"Product has been updated successfully",
+                text:this.translate('updatedProduct'),
                 icon: "success"
               });
             }
@@ -97,7 +103,7 @@ export default {
             this.$emit("fetchData");
             this.$router.push({name:'AdminProduct'})
             swal({
-              text:"Product has been deleted successfully",
+              text:this.translate('deletedProduct'),
               icon: "success"
             })
           }).catch(err=>console.log('err', err))

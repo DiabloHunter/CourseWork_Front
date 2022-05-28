@@ -1,4 +1,5 @@
 <template>
+
   <div class="card w-100 h-100">
     <div class="embed-responsive embed-responsive-16by9">
       <img
@@ -15,20 +16,29 @@
         {{ order.price}} $
       </p>
       <p class="card-text">
-        {{ order.products.length}} goods
+        {{ order.products.length}} {{ translate('goods') }}
       </p>
 
     </div>
   </div>
 </template>
 <script>
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
+
 export default {
   name: "OrderBox",
-  props: ["order"],
+  props: ["order", "language"],
+  mixins:[en, ua],
   data() {
     return {
       correctDate: "",
     };
+  },
+  methods:{
+    translate(prop){
+      return this[this.language]["orderBox"][prop];
+    },
   },
   mounted() {
     this.correctDate = this.order.createdDate.split("T").join(" ").substring(0, 19);

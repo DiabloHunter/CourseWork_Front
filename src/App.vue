@@ -2,6 +2,8 @@
   <Navbar :cartCount="cartCount"
           @resetCartCount="resetCartCount"
           :token="token"
+          @changeLang="changeLang"
+          :language="language"
   />
   <router-view v-if="categories && products" style="min-height: 60vh"
       :baseURL="baseURL"
@@ -10,7 +12,9 @@
       :orderItems="orderItems"
       :token="token"
       :userRole="userRole"
+      :language="language"
       @fetchData="fetchData"
+      @changeLang="changeLang"
       @resetCartCountAfterPayment="resetCartCountAfterPayment"
   >
   </router-view>
@@ -34,6 +38,7 @@ export default {
       cartCount: 0,
       token:null,
       userRole:null,
+      language: "en",
     }
   },
   methods: {
@@ -83,6 +88,9 @@ export default {
       this.cartCount = 0;
     },
 
+    changeLang(data){
+      this.language = data.lang;
+    }
   },
   mounted() {
     this.token = localStorage.getItem("token");

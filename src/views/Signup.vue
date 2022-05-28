@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-12 justify-content-center d-flex pt-3">
         <div id="signup" class="flex-item border">
-          <h2 class="pt-4 pl-4">Create Account</h2>
+          <h2 class="pt-4 pl-4">{{translate('title')}}</h2>
           <form @submit="signup" class="pt-4 pl-4 pr-4">
             <div class="form-group">
               <label>Email</label>
@@ -25,7 +25,7 @@
             <div class="form-row">
               <div class="col">
                 <div class="form-group">
-                  <label> First Name</label>
+                  <label>{{translate('firstName')}}</label>
                   <input
                       type="text"
                       v-model="firstName"
@@ -36,7 +36,7 @@
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label> Last Name</label>
+                  <label>{{translate('lastName')}}</label>
                   <input
                       type="text"
                       v-model="lastName"
@@ -49,7 +49,7 @@
 
             <!-- password -->
             <div class="form-group">
-              <label> Password</label>
+              <label>{{translate('password')}}</label>
               <input
                   type="password"
                   v-model="password"
@@ -61,7 +61,7 @@
 
             <!-- confirm password -->
             <div class="form-group">
-              <label> Confirm password</label>
+              <label>{{translate('confirmPassword')}}</label>
               <input
                   type="password"
                   v-model="confirmPassword"
@@ -70,7 +70,7 @@
               />
             </div>
 
-            <button class="btn btn-primary mt-2">Create Account</button>
+            <button class="btn btn-primary mt-2" style="margin-bottom: 5%">{{translate('createAccount')}}</button>
           </form>
         </div>
       </div>
@@ -82,10 +82,13 @@
 <script>
 import axios from "axios";
 import swal from "sweetalert";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Signup',
-  props: ["baseURL"],
+  mixins:[en, ua],
+  props: ["baseURL", "language"],
   data() {
     return {
       email: null,
@@ -96,6 +99,9 @@ export default {
     };
   },
   methods: {
+    translate(prop){
+      return this[this.language]["signUp"][prop];
+    },
     async signup(e) {
       e.preventDefault();
       if (this.password === this.confirmPassword) {

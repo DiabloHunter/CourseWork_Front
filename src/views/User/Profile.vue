@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-12 justify-content-center d-flex pt-3">
         <div id="signup" class="flex-item border">
-          <h2 class="pt-4 pl-4">Profile</h2>
+          <h2 class="pt-4 pl-4">{{translate('title')}}</h2>
           <form @submit="signup" class="pt-4 pl-4 pr-4">
             <div class="form-group">
               <label>Email</label>
@@ -25,7 +25,7 @@
             <div class="form-row">
               <div class="col">
                 <div class="form-group">
-                  <label> First Name</label>
+                  <label>{{translate('firstName')}}</label>
                   <input
                       type="text"
                       v-model="firstName"
@@ -36,7 +36,7 @@
               </div>
               <div class="col">
                 <div class="form-group">
-                  <label> Last Name</label>
+                  <label>{{translate('lastName')}}</label>
                   <input
                       type="text"
                       v-model="lastName"
@@ -49,7 +49,7 @@
 
             <!-- password -->
             <div class="form-group">
-              <label> Password</label>
+              <label>{{translate('password')}}</label>
               <input
                   type="password"
                   v-model="password"
@@ -60,7 +60,7 @@
 
             <!-- confirm password -->
             <div class="form-group">
-              <label> Confirm password</label>
+              <label>{{translate('confirmPassword')}}</label>
               <input
                   type="password"
                   v-model="confirmPassword"
@@ -69,8 +69,8 @@
               />
             </div>
             <div style="margin-bottom: 10px">
-              <button class="btn btn-primary" type="button" @click="editUser()">Update</button>
-              <button class="btn btn-danger" type="button" style="float:right;">Delete</button>
+              <button class="btn btn-primary" type="button" @click="editUser()">{{translate('update')}}</button>
+              <button class="btn btn-danger" type="button" style="float:right;">{{translate('delete')}}</button>
             </div>
 
           </form>
@@ -84,10 +84,13 @@
 <script>
 import axios from "axios";
 import swal from "sweetalert";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Profile',
-  props: ["baseURL", "token"],
+  mixins:[en, ua],
+  props: ["baseURL", "token", "language"],
   data() {
     return {
       userInfo:null,
@@ -99,6 +102,9 @@ export default {
     };
   },
   methods: {
+    translate(prop){
+      return this[this.language]["profile"][prop];
+    },
     async editUser(){
       console.log(this.token);
       if (this.password === this.confirmPassword) {
@@ -113,14 +119,14 @@ export default {
               this.$emit("fetchData");
               this.$router.push({name:'Profile'})
               swal({
-                text:"Product has been updated successfully",
+                text:this.translate('updatedProfile'),
                 icon: "success"
               })
             }).catch(err=>console.log('err', err))
       } else {
         // show some error
         swal({
-          text: "Passwords don't match",
+          text: this.translate('passwordsDontMatch'),
           icon: "error",
         });
       }

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h3 class="pt-3">Add Category</h3>
+        <h3 class="pt-3">{{translate('title')}}</h3>
       </div>
     </div>
     <div class="row">
@@ -10,19 +10,19 @@
       <div class="col-6">
         <form>
           <div class="form-group">
-            <label>Name</label>
+            <label>{{translate('name')}}</label>
             <input type="text" class="form-control" v-model="categoryName" required/>
           </div>
           <div class="form-group">
-            <label>Description</label>
+            <label>{{translate('description')}}</label>
             <input type="text" class="form-control" v-model="description" pattern=".{3,240}"/>
           </div>
           <div class="form-group">
-            <label>Image</label>
+            <label>{{translate('image')}}</label>
             <input type="text" class="form-control" v-model="imageUrl" pattern=".{20,240}" />
           </div>
           <button type="button" class="btn btn-primary" @click="addCategory()">
-            Submit
+            {{translate('submit')}}
           </button>
         </form>
       </div>
@@ -33,8 +33,11 @@
 <script>
 import swal from "sweetalert";
 import axios from 'axios'
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 export default {
-  props: ["baseURL"],
+  props: ["baseURL", "language"],
+  mixins:[en, ua],
   data() {
     return {
       categoryName: "",
@@ -43,6 +46,9 @@ export default {
     };
   },
   methods: {
+    translate(prop){
+      return this[this.language]["addCategory"][prop];
+    },
     addCategory() {
       const newCategory = {
         categoryName: this.categoryName,
@@ -57,7 +63,7 @@ export default {
               this.$emit("fetchData");
               this.$router.push({name: 'Category'});
               swal({
-                text: "Category added successfully",
+                text: this.translate('addedCategory'),
                 icon: "success"
               })
             }
@@ -71,34 +77,6 @@ export default {
         console.log("err", err);
       })
       this.$emit("fetchData");
-
-     /* axios({
-        method: "post",
-        url: `${this.baseURL}/category/create`,
-        data: JSON.stringify(newCategory),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          if(res.data.success){
-            this.$emit("fetchData");
-            this.$router.push({name: 'Category'});
-            sweetalert({
-              text: "Category added successfully",
-              icon: "success",
-            });
-          }
-          else{
-            swal({
-              text: res.data.message,
-              icon: "error",
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });*/
     },
   },
 };

@@ -4,7 +4,7 @@ import AddCategory from '../views/Category/AddCategory'
 import Category from '../views/Category/Category'
 import Product from '../views/Product/Product'
 import AddProduct from '../views/Product/AddProduct'
-import Admin from '../views/Admin'
+
 import EditCategory from "@/views/Category/EditCategory";
 import EditProduct from "@/views/Product/EditProduct";
 import ShowDetails from "@/views/Product/ShowDetails";
@@ -41,12 +41,6 @@ const routes = [
     path: '/admin/category',
     name: 'Category',
     component: Category
-  },
-  //admin homepage
-  {
-    path: '/admin',
-    name: 'Admin',
-    component: Admin
   },
   {
     path: '/admin/product',

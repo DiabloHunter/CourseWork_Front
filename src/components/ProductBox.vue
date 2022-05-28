@@ -20,20 +20,29 @@
       <br>
       <router-link :to="{name:'EditProduct', params:{id:product.id}}"
       v-if="userRole">
-        <button class="btn btn-primary">Edit</button>
+        <button class="btn btn-primary">{{translate('edit')}}</button>
       </router-link>
     </div>
   </div>
 </template>
 
 <script>
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
+
 export default {
   name: "ProductBox",
-  props: ["product", "userRole"],
+  props: ["product", "userRole", "language"],
+  mixins:[en, ua],
   data() {
     return {
       email: null,
     };
+  },
+  methods:{
+    translate(prop){
+      return this[this.language]["productBox"][prop];
+    },
   },
   mounted() {
   },

@@ -1,19 +1,21 @@
 <template>
   <div class="div_class">
-    <h3>You will be redirected to payment page</h3>
+    <h3>{{translate('title')}}</h3>
     <div class="alert alert-primary">
-      While making payment use card number 4242 4242 4242 4242 and enter random
-      date and cvv (3 digit)
+      {{translate('info')}}
     </div>
 
-    <button class="btn btn-primary" @click="goToCheckout">Make Payment</button>
+    <button class="btn btn-primary" @click="goToCheckout">{{translate('makePayment')}}</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import swal from "sweetalert";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 export default {
+  mixins:[en, ua],
   data() {
     return {
       stripeAPIToken: 'pk_test_51KpYLzAvBsO8ov2CuczSaSRKNddiBeB8dRZXrqL6PgDyKu7D9y5jEuZ7zf4AjpvLtUeV8e6fAAvhz6YkfDW1e2Qi00uLKyVNME',
@@ -26,8 +28,11 @@ export default {
   },
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Checkout',
-  props: ['baseURL'],
+  props: ['baseURL', "language"],
   methods: {
+    translate(prop){
+      return this[this.language]["checkout"][prop];
+    },
     getAllItems() {
       axios
           .get(`${this.baseURL}cart/?token=${this.token}`)

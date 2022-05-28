@@ -2,11 +2,11 @@
   <div class="container">
     <div class="row pt-5">
       <div class="col-md-1"></div>
-<!--      display image-->
+      <!--      display image-->
       <div class="col-md-4 col-12">
         <img :src="product.imageURL" class="img-fluid">
       </div>
-<!--      display product details-->
+      <!--      display product details-->
       <div class="col-md-6 col-12 pt-3 pt-md-0">
         <h4>{{product.name}}</h4>
         <h6 class="catgory font-italic">{{category.categoryName}}</h6>
@@ -17,14 +17,14 @@
         <div class="d-flex flex-row justify-content-between">
           <div class="input-group col-md-3 col-4 p-0">
             <div class="input-group-prepend">
-              <span class="input-group-text">Quantity</span>
+              <span class="input-group-text">{{translate('quantity')}}</span>
             </div>
             <input type="number" class="form-control" v-model="quantity" />
           </div>
 
           <div class="input-group col-md-3 col-4 p-0">
             <button class="btn" id="add-to-cart-button" @click="addToCart">
-              Add to Cart
+              {{translate('addToCart')}}
             </button>
           </div>
         </div>
@@ -53,6 +53,8 @@
 <script>
 import swal from "sweetalert";
 import axios from "axios";
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
 export default {
   name: "ShowDetails",
   data(){
@@ -61,17 +63,36 @@ export default {
       category:{},
       quantity: 1,
       wishListString: "Add to wishlist",
+      goodAddedToWishList:0,
       wishlist: null
     }
   },
-  props: ["baseURL", "products", "categories"],
+  mixins:[en, ua],
+  props: ["baseURL", "products", "categories", "language"],
   methods:{
+    translate(prop){
+      if(this.language=="ua"){
+        if(this.goodAddedToWishList==0){
+          this.wishListString = "Додати до кошику";
+        }
+        else{
+          this.wishListString = "Додано до кошику";
+        }
+      }
+      else{
+        if(this.goodAddedToWishList==0){
+          this.wishListString = "Add to Wishlist";
+        }
+        else{
+          this.wishListString = "Added to Wishlist";
+        }
+      }
+      return this[this.language]["productDetails"][prop];
+    },
     addToWishlist() {
       if (!this.token) {
-        // user is not logged in
-        // show some error
         swal({
-          text: "Please login to add item in wishlist!",
+          text: this.translate('pleaseLoginToAddToWishlist'),
           icon: "error",
         });
         return;
@@ -82,13 +103,12 @@ export default {
             .delete(`${this.baseURL}wishlist/delete/${this.id}?token=${this.token}`)
             .then((res) => {
               let index = this.wishlist.indexOf((product)=>product.id == this.product.id);
-              console.log(index);
               this.wishlist.splice(index);
-              console.log(this.wishlist);
               if (res.status === 200) {
-                this.wishListString = "Add to Wishlist";
+                this.wishListString = this.translate('wishlistAdd');
+                this.goodAddedToWishList = 0;
                 swal({
-                  text: "Deleted from Wishlist",
+                  text: this.translate('deletedFromWishlist'),
                   icon: "success",
                 });
               }
@@ -104,11 +124,11 @@ export default {
             })
             .then((res) => {
               this.wishlist.push(this.product);
-              console.log(this.wishlist);
               if (res.status === 201) {
-                this.wishListString = "Added to Wishlist";
+                this.wishListString = this.translate('wishlistAdded');
+                this.goodAddedToWishList = 1;
                 swal({
-                  text: "Added to Wishlist",
+                  text: this.translate('addedToWishlist'),
                   icon: "success",
                 });
               }
@@ -123,7 +143,7 @@ export default {
         // user is not logged in
         // show some error
         swal({
-          text: "Please login to add item in cart",
+          text: this.translate('pleaseLoginToAddToCart'),
           icon: "error",
         });
         return;
@@ -137,7 +157,7 @@ export default {
           .then((res) => {
             if (res.status == 201) {
               swal({
-                text: "Product added in cart",
+                text: this.translate('addedToCart'),
                 icon: "success",
               });
               this.$emit("fetchData");
@@ -155,7 +175,8 @@ export default {
               inWishList = this.wishlist.find((product)=>product.id == this.id);
             }
             if(inWishList!=null){
-              this.wishListString = "Added to Wishlist";
+              this.goodAddedToWishList = 1;
+              this.wishListString = this.translate('wishlistAdded');
             }
           })
           .catch((err) => {

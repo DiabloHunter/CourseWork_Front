@@ -17,16 +17,24 @@
       </p>
       <router-link v-if="userRole" :to="{name:'EditCategory', params:{id:category.id}}"
                    v-show="$route.name=='Category'">
-        <button class="btn btn-primary">Edit</button>
+        <button class="btn btn-primary">{{translate('edit')}}</button>
       </router-link>
     </div>
   </div>
 </template>
 <script>
+import en from "@/assets/i18n/en";
+import ua from "@/assets/i18n/ua";
+
 export default {
   name: "CategoryBox",
-  props: ["category", "userRole"],
-  methods: {},
+  mixins:[en, ua],
+  props: ["category", "userRole", "language"],
+  methods: {
+    translate(prop){
+      return this[this.language]["categoryBox"][prop];
+    },
+  },
 };
 </script>
 
