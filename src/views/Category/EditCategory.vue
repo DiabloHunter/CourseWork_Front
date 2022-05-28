@@ -52,7 +52,6 @@ export default {
     },
     async editCategory(){
       delete this.category["products"]
-      console.log('category', this.category)
       await axios.post(`${this.baseURL}category/update/${this.id}`, this.category)
           .then((res)=>{
             if(res.data.success){
@@ -73,7 +72,6 @@ export default {
     },
     async deleteCategory(){
       delete this.category["products"]
-      console.log('category', this.category)
       await axios.delete(`${this.baseURL}category/delete/${this.id}`, this.category)
           .then(()=>{
             this.$emit("fetchData");

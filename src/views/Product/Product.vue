@@ -105,7 +105,6 @@ export default {
   mounted() {
     this.$emit("fetchData");
     this.thisProducts = this.products;
-    console.log(this.userRole);
     this.productSortAndFilter();
   }
 }

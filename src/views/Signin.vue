@@ -56,7 +56,6 @@ export default {
 
                         }*/
             localStorage.setItem("token", res.data.token);
-            console.log(res.data.role);
             if(res.data.role==="ADMIN"){
               localStorage.setItem("userRole", res.data.role);
             }

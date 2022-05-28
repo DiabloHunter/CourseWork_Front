@@ -28,6 +28,27 @@
           </select>
         </li>
         <li class="nav-item dropdown">
+<!--          <select v-if="userRole" class="custom-select" >
+            <option value="backUp" @click="backUp()">BackUp</option>
+            <option value="restore" @click="restore()">Restore</option>
+          </select>-->
+          <a
+              class="nav-link text-light dropdown-toggle"
+              href="#"
+              id="navbarackUp"
+              data-toggle="dropdown">
+            DataBase
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarBrowse">
+            <a class="dropdown-item" href="#" style="color:black;" @click="backUp()">
+              BackUp
+            </a>
+            <a class="dropdown-item" href="#" style="color:black;" @click="restore()">
+              Restore
+            </a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
           <a
               class="nav-link text-light dropdown-toggle"
               href="#"
@@ -114,11 +135,12 @@
 import swal from "sweetalert";
 import en from "@/assets/i18n/en";
 import ua from "@/assets/i18n/ua";
+import axios from "axios";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Navbar",
   mixins:[en, ua],
-  props: ["cartCount", "token", "language"],
+  props: ["baseURL","cartCount", "token", "language", "userRole"],
   data() {
     return {
       lang: "en",
@@ -130,8 +152,24 @@ export default {
     },
     changeLang(){
       this.$emit("changeLang", {
-            lang: this.lang,
+        lang: this.lang,
       })
+    },
+    async backUp(){
+      await axios
+          .post(`${this.baseURL}user/backup?token=${this.token}`)
+          .then(() => {
+            this.$emit("fetchData");
+          })
+          .catch((err) => console.log("err", err));
+    },
+    restore(){
+      axios
+          .post(`${this.baseURL}user/restore?token=${this.token}`)
+          .then(() => {
+            this.$emit("fetchData");
+          })
+          .catch((err) => console.log("err", err));
     },
     signout() {
       localStorage.removeItem("token");
@@ -145,7 +183,7 @@ export default {
     },
   },
   mounted() {
-/*    this.token = localStorage.getItem("token");*/
+   /* this.token = localStorage.getItem("token");*/
   },
 };
 </script>

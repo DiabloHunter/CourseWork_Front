@@ -71,9 +71,6 @@ export default {
           .catch((err) => console.log(err));
     },
     goToCheckout() {
-      console.log('checkoutBodyArray', this.checkoutBodyArray);
-      console.log(this.orderItem);
-
       axios
           .post(`${this.baseURL}order/add?token=${this.token}`, this.orderItem)
           .catch((err) => {
@@ -93,7 +90,6 @@ export default {
           )
           .then((response) => {
             localStorage.setItem('sessionId', response.data.sessionId);
-            console.log('session', response.data);
             this.stripe.redirectToCheckout({
               sessionId: response.data.sessionId,
             });

@@ -75,7 +75,6 @@ export default {
     },
     async editProduct(){
       delete this.product["products"]
-      console.log('product', this.product)
       await axios.post(`${this.baseURL}product/update/${this.id}`, this.product)
           .then(res=>{
             if(res.data.success){
@@ -97,7 +96,6 @@ export default {
     },
     async deleteProduct(){
       delete this.product["products"]
-      console.log('product', this.product)
       await axios.delete(`${this.baseURL}product/delete/${this.id}`, this.product)
           .then(()=>{
             this.$emit("fetchData");
@@ -112,7 +110,6 @@ export default {
   mounted() {
     this.id = this.$route.params.id;
     this.product = this.products.find(product=>product.id==this.id)
-    console.log(this.product);
   }
 }
 </script>

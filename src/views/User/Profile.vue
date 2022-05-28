@@ -106,7 +106,6 @@ export default {
       return this[this.language]["profile"][prop];
     },
     async editUser(){
-      console.log(this.token);
       if (this.password === this.confirmPassword) {
         const user = {
           email: this.email,

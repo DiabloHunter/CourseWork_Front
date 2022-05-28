@@ -86,7 +86,6 @@ export default {
           .then((res) => {
             const result = res.data;
             this.products = result.products;
-            console.log(this.products);
           })
           .catch((err) => console.log("err", err));
     }

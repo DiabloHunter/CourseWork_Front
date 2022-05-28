@@ -1,9 +1,12 @@
 <template>
   <Navbar :cartCount="cartCount"
-          @resetCartCount="resetCartCount"
-          :token="token"
-          @changeLang="changeLang"
           :language="language"
+          :userRole="userRole"
+          :token="token"
+          :baseURL="baseURL"
+          @resetCartCount="resetCartCount"
+          @changeLang="changeLang"
+          @fetchData="fetchData"
   />
   <router-view v-if="categories && products" style="min-height: 60vh"
       :baseURL="baseURL"
