@@ -117,13 +117,13 @@ export default {
             .then(() => {
               this.$router.replace("/");
               swal({
-                text: "User signup successful, please login!",
+                text: this.translate('registrationSuccessful'),
                 icon: "success",
               });
             })
             .catch((err) => {
               swal({
-                text: "User with same login has been already exist!",
+                text: this.translate('userAlreadyExist'),
                 icon: "error",
               });
               console.log("err", err)
@@ -131,7 +131,7 @@ export default {
       } else {
         // show some error
         swal({
-          text: "Passwords don't match",
+          text: this.translate('passwordsDontMatch'),
           icon: "error",
         });
       }

@@ -15,14 +15,14 @@
           {{product.description}}
         </p>
         <div class="d-flex flex-row justify-content-between">
-          <div class="input-group col-md-3 col-4 p-0">
+          <div class="input-group col-md-4 col-4 p-0">
             <div class="input-group-prepend">
               <span class="input-group-text">{{translate('quantity')}}</span>
             </div>
-            <input type="number" class="form-control" v-model="quantity" />
+            <input type="number" class="form-control"   v-model="quantity" />
           </div>
 
-          <div class="input-group col-md-3 col-4 p-0">
+          <div class="input-group col-md-4 col-4 p-0">
             <button class="btn" id="add-to-cart-button" @click="addToCart">
               {{translate('addToCart')}}
             </button>

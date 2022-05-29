@@ -16,6 +16,9 @@ export default {
                     signIn:"Sign in",
                     signOut:"Sign out",
                     loggedOut:"Logged you out. Visit again!",
+                    dataBase:"DataBase",
+                    backup:"Backup",
+                    restore:"Restore",
                 },
                 home:{
                     startShopping:"Start Shopping",
@@ -27,6 +30,8 @@ export default {
                     title:"Sign In",
                     password:"Password",
                     continue:"Continue",
+                    loginSuccessful:"Login successful",
+                    incorrect:"Incorrect login or password"
                 },
                 signUp:{
                     title:"Sign Up",
@@ -35,6 +40,9 @@ export default {
                     password:"Password",
                     confirmPassword:"Confirm password",
                     createAccount:"Create Account",
+                    registrationSuccessful:"User signup successful, please login!",
+                    userAlreadyExist:"User with same login has been already exist!",
+                    passwordsDontMatch:"Passwords don't match"
                 },
                 profile:{
                     title:"Profile",
@@ -165,6 +173,9 @@ export default {
                     addedToWishlist:"Added to Wishlist",
                     addedToCart:"Good added in cart",
                 },
+                statistic:{
+                    title:"Statistic",
+                }
 
 
             }

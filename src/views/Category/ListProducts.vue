@@ -30,17 +30,32 @@ export default {
       msg:''
     }
   },
-  props:["categories", "products"],
+  props:["categories", "products", "language"],
   mounted() {
     this.id = this.$route.params.id;
     this.category = this.categories.find(category=>category.id==this.id);
     this.productList = this.products.filter(x=>x.categoryId==this.id);
     if (this.productList.length == 0) {
-      this.msg = "no products found"
+      if(this.language=="ua"){
+        this.msg = "Товарів не знайдено!"
+      }
+      else{
+        this.msg = "No goods found!"
+      }
     } else if (this.productList.length == 1) {
-      this.msg = "Only 1 product found"
+      if(this.language=="ua"){
+        this.msg = "Знайдено лише один товар!"
+      }
+      else{
+        this.msg = "Only 1 good found!"
+      }
     } else {
-      this.msg = this.productList.length + " products found"
+      if(this.language=="ua"){
+        this.msg = this.productList.length + " товарів знайдено!"
+      }
+      else{
+        this.msg = this.productList.length + " goods found!"
+      }
     }
   }
 }

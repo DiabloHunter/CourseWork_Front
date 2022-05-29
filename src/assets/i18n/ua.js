@@ -16,6 +16,9 @@ export default {
                     signIn:"Авторизація",
                     signOut:"Вихід",
                     loggedOut:"До побачення!",
+                    dataBase:"База даних",
+                    backup:"Резервне копіювання",
+                    restore:"Відновлення",
                 },
                 home:{
                     startShopping:"Почати!",
@@ -27,6 +30,8 @@ export default {
                     title:"Авторизація",
                     password:"Пароль",
                     continue:"Продовжити",
+                    loginSuccessful:"Авторизація успішна!",
+                    incorrect:"Неправильний логін чи пароль!"
                 },
                 signUp:{
                     title:"Реєстрація",
@@ -35,6 +40,9 @@ export default {
                     password:"Пароль",
                     confirmPassword:"Підтвердить пароль",
                     createAccount:"Створити акаунт",
+                    registrationSuccessful:"Реєстрація успішна! Будь ласка авторизуйтесь!",
+                    userAlreadyExist:"Користувач з таким логіном вже існує!",
+                    passwordsDontMatch:"Паролі не збігаються!"
                 },
                 profile:{
                     title:"Профіль",

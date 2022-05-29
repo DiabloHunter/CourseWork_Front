@@ -27,7 +27,7 @@
             <option value="ua">Український</option>
           </select>
         </li>
-        <li class="nav-item dropdown">
+        <li v-if="userRole" class="nav-item dropdown">
 <!--          <select v-if="userRole" class="custom-select" >
             <option value="backUp" @click="backUp()">BackUp</option>
             <option value="restore" @click="restore()">Restore</option>
@@ -37,14 +37,14 @@
               href="#"
               id="navbarackUp"
               data-toggle="dropdown">
-            DataBase
+            {{translate('dataBase')}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarBrowse">
             <a class="dropdown-item" href="#" style="color:black;" @click="backUp()">
-              BackUp
+              {{translate('backup')}}
             </a>
             <a class="dropdown-item" href="#" style="color:black;" @click="restore()">
-              Restore
+              {{translate('restore')}}
             </a>
           </div>
         </li>

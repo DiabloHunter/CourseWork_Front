@@ -60,7 +60,7 @@ export default {
               localStorage.setItem("userRole", res.data.role);
             }
             swal({
-              text: "Login successful",
+              text: this.translate('loginSuccessful'),
               icon: "success",
             });
             this.$emit("fetchData");
@@ -68,7 +68,7 @@ export default {
           })
           .catch((err) =>{
             swal({
-              text: "Incorrect login or password",
+              text: this.translate('incorrect'),
               icon: "error",
             });
             console.log("err", err)
