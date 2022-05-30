@@ -46,6 +46,9 @@
             <a class="dropdown-item" href="#" style="color:black;" @click="restore()">
               {{translate('restore')}}
             </a>
+            <a class="dropdown-item" href="#" style="color:black;" @click="checkPrices()">
+              {{translate('checkPrices')}}
+            </a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -155,8 +158,8 @@ export default {
         lang: this.lang,
       })
     },
-    async backUp(){
-      await axios
+     backUp(){
+      axios
           .post(`${this.baseURL}user/backup?token=${this.token}`)
           .then(() => {
             this.$emit("fetchData");
@@ -166,6 +169,14 @@ export default {
     restore(){
       axios
           .post(`${this.baseURL}user/restore?token=${this.token}`)
+          .then(() => {
+            this.$emit("fetchData");
+          })
+          .catch((err) => console.log("err", err));
+    },
+    checkPrices(){
+      axios
+          .post(`${this.baseURL}product/checkPrices`)
           .then(() => {
             this.$emit("fetchData");
           })

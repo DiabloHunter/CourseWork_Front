@@ -19,6 +19,7 @@ export default {
                     dataBase:"База даних",
                     backup:"Резервне копіювання",
                     restore:"Відновлення",
+                    checkPrices:"Перевірка"
                 },
                 home:{
                     startShopping:"Почати!",

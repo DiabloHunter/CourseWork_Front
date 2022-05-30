@@ -19,6 +19,7 @@ export default {
                     dataBase:"DataBase",
                     backup:"Backup",
                     restore:"Restore",
+                    checkPrices:"Check"
                 },
                 home:{
                     startShopping:"Start Shopping",
